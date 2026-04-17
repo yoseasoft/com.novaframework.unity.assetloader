@@ -39,11 +39,11 @@ namespace NovaFramework.AssetLoader
         /// <summary>
         /// 异步资源的状态标识
         /// </summary>
-        protected bool _isAsyncStatus = false;
+        private bool _isAsyncStatus = false;
         /// <summary>
         /// 资源对象的名称
         /// </summary>
-        protected string _nickname;
+        private string _nickname;
 
         /// <summary>
         /// 流程传输对象初始化回调函数
