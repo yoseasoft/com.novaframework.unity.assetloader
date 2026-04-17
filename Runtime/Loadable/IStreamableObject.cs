@@ -33,11 +33,6 @@ namespace NovaFramework.AssetLoader
     public interface IStreamableObject
     {
         /// <summary>
-        /// 流式传输的数据类型
-        /// </summary>
-        StreamableDataType DataType => StreamableDataType.None;
-
-        /// <summary>
         /// 流式传输对象初始化回调函数
         /// </summary>
         void Initialize();
@@ -50,6 +45,15 @@ namespace NovaFramework.AssetLoader
         /// 释放当前数据对象接收的资源实例
         /// </summary>
         void Release();
+
+        /// <summary>
+        /// 流式资源名称属性获取函数
+        /// </summary>
+        string Name { get; }
+        /// <summary>
+        /// 流式资源地址属性获取函数
+        /// </summary>
+        string Url { get; }
 
         /// <summary>
         /// 异步任务属性获取函数

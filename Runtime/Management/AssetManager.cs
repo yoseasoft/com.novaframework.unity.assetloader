@@ -43,47 +43,51 @@ namespace NovaFramework.AssetLoader
         /// <summary>
         /// 同步加载场景资源
         /// </summary>
+        /// <param name="name">资源名称</param>
         /// <param name="url">资源地址</param>
         /// <returns>返回场景资源对象</returns>
-        public static ISceneObject LoadSceneSync(string url)
+        public static ISceneObject LoadSceneSync(string name, string url)
         {
-            return LoadSceneSync(url, LoadSceneMode.Additive, LocalPhysicsMode.None);
+            return LoadSceneSync(name, url, LoadSceneMode.Additive, LocalPhysicsMode.None);
         }
 
         /// <summary>
         /// 同步加载场景资源
         /// </summary>
+        /// <param name="name">资源名称</param>
         /// <param name="url">资源地址</param>
         /// <param name="sceneMode">场景加载模式</param>
         /// <param name="physicsMode">场景物理模式</param>
         /// <returns>返回场景资源对象</returns>
-        public static ISceneObject LoadSceneSync(string url, LoadSceneMode sceneMode, LocalPhysicsMode physicsMode)
+        public static ISceneObject LoadSceneSync(string name, string url, LoadSceneMode sceneMode, LocalPhysicsMode physicsMode)
         {
             Logger.Assert(null != _assetModule, "The asset module must be non-null.");
-            return _assetModule.LoadSceneSync(url, sceneMode, physicsMode);
+            return _assetModule.LoadSceneSync(name, url, sceneMode, physicsMode);
         }
 
         /// <summary>
         /// 异步加载场景资源
         /// </summary>
+        /// <param name="name">资源名称</param>
         /// <param name="url">资源地址</param>
         /// <returns>返回场景资源对象</returns>
-        public static ISceneObject LoadSceneAsync(string url)
+        public static ISceneObject LoadSceneAsync(string name, string url)
         {
-            return LoadSceneAsync(url, LoadSceneMode.Additive, LocalPhysicsMode.None);
+            return LoadSceneAsync(name, url, LoadSceneMode.Additive, LocalPhysicsMode.None);
         }
 
         /// <summary>
         /// 异步加载场景资源
         /// </summary>
+        /// <param name="name">资源名称</param>
         /// <param name="url">资源地址</param>
         /// <param name="sceneMode">场景加载模式</param>
         /// <param name="physicsMode">场景物理模式</param>
         /// <returns>返回场景资源对象</returns>
-        public static ISceneObject LoadSceneAsync(string url, LoadSceneMode sceneMode, LocalPhysicsMode physicsMode)
+        public static ISceneObject LoadSceneAsync(string name, string url, LoadSceneMode sceneMode, LocalPhysicsMode physicsMode)
         {
             Logger.Assert(null != _assetModule, "The asset module must be non-null.");
-            return _assetModule.LoadSceneAsync(url, sceneMode, physicsMode);
+            return _assetModule.LoadSceneAsync(name, url, sceneMode, physicsMode);
         }
 
         #endregion
@@ -93,71 +97,77 @@ namespace NovaFramework.AssetLoader
         /// <summary>
         /// 同步加载通用资源对象
         /// </summary>
+        /// <param name="name">资源名称</param>
         /// <param name="url">资源地址</param>
         /// <returns>返回通用资源对象</returns>
-        public static IAssetObject LoadAssetSync(string url)
+        public static IAssetObject LoadAssetSync(string name, string url)
         {
             Logger.Assert(null != _assetModule, "The asset module must be non-null.");
-            return _assetModule.LoadAssetSync(url);
+            return _assetModule.LoadAssetSync(name, url);
         }
 
         /// <summary>
         /// 同步加载通用资源对象
         /// </summary>
         /// <typeparam name="T">资源类型</typeparam>
+        /// <param name="name">资源名称</param>
         /// <param name="url">资源地址</param>
         /// <returns>返回通用资源对象</returns>
-        public static IAssetObject LoadAssetSync<T>(string url) where T : UnityEngine.Object
+        public static IAssetObject LoadAssetSync<T>(string name, string url) where T : UnityEngine.Object
         {
             Logger.Assert(null != _assetModule, "The asset module must be non-null.");
-            return _assetModule.LoadAssetSync<T>(url);
+            return _assetModule.LoadAssetSync<T>(name, url);
         }
 
         /// <summary>
         /// 同步加载通用资源对象
         /// </summary>
+        /// <param name="name">资源名称</param>
         /// <param name="url">资源地址</param>
         /// <param name="type">资源类型</param>
         /// <returns>返回通用资源对象</returns>
-        public static IAssetObject LoadAssetSync(string url, Type type)
+        public static IAssetObject LoadAssetSync(string name, string url, Type type)
         {
             Logger.Assert(null != _assetModule, "The asset module must be non-null.");
-            return _assetModule.LoadAssetSync(url, type);
+            return _assetModule.LoadAssetSync(name, url, type);
         }
 
         /// <summary>
         /// 异步加载通用资源对象
         /// </summary>
+        /// <param name="name">资源名称</param>
         /// <param name="url">资源地址</param>
         /// <returns>返回通用资源对象</returns>
-        public static IAssetObject LoadAssetAsync(string url)
+        public static IAssetObject LoadAssetAsync(string name, string url)
         {
             Logger.Assert(null != _assetModule, "The asset module must be non-null.");
-            return _assetModule.LoadAssetAsync(url);
+            return _assetModule.LoadAssetAsync(name, url);
         }
 
         /// <summary>
         /// 异步加载通用资源对象
         /// </summary>
         /// <typeparam name="T">资源类型</typeparam>
+        /// <param name="name">资源名称</param>
         /// <param name="url">资源地址</param>
         /// <returns>返回通用资源对象</returns>
-        public static IAssetObject LoadAssetAsync<T>(string url) where T : UnityEngine.Object
+        public static IAssetObject LoadAssetAsync<T>(string name, string url) where T : UnityEngine.Object
         {
             Logger.Assert(null != _assetModule, "The asset module must be non-null.");
-            return _assetModule.LoadAssetAsync<T>(url);
+            return _assetModule.LoadAssetAsync<T>(name, url);
         }
 
         /// <summary>
         /// 异步加载通用资源对象
         /// </summary>
+        /// <param name="name">资源名称</param>
         /// <param name="url">资源地址</param>
         /// <param name="type">资源类型</param>
         /// <returns>返回通用资源对象</returns>
-        public static IAssetObject LoadAssetAsync(string url, Type type)
+        public static IAssetObject LoadAssetAsync(string name, string url, Type type)
         {
             Logger.Assert(null != _assetModule, "The asset module must be non-null.");
-            return _assetModule.LoadAssetAsync(url, type);
+            return _assetModule.LoadAssetAsync(name, url, type);
         }
 
         #endregion
@@ -167,23 +177,25 @@ namespace NovaFramework.AssetLoader
         /// <summary>
         /// 同步加载原生文件
         /// </summary>
+        /// <param name="name">资源名称</param>
         /// <param name="url">资源地址</param>
         /// <returns>返回原生文件资源对象</returns>
-        public static IRawFileObject LoadRawFileSync(string url)
+        public static IRawFileObject LoadRawFileSync(string name, string url)
         {
             Logger.Assert(null != _assetModule, "The asset module must be non-null.");
-            return _assetModule.LoadRawFileSync(url);
+            return _assetModule.LoadRawFileSync(name, url);
         }
 
         /// <summary>
         /// 异步加载原生文件
         /// </summary>
+        /// <param name="name">资源名称</param>
         /// <param name="url">资源地址</param>
         /// <returns>返回原生文件资源对象</returns>
-        public static IRawFileObject LoadRawFileAsync(string url)
+        public static IRawFileObject LoadRawFileAsync(string name, string url)
         {
             Logger.Assert(null != _assetModule, "The asset module must be non-null.");
-            return _assetModule.LoadRawFileAsync(url);
+            return _assetModule.LoadRawFileAsync(name, url);
         }
 
         #endregion

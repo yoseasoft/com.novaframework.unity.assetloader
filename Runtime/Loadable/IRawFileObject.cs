@@ -30,9 +30,19 @@ namespace NovaFramework.AssetLoader
     public interface IRawFileObject : IStreamableObject
     {
         /// <summary>
-        /// 流式传输的数据类型
+        /// 同步模式加载流式资源
         /// </summary>
-        new StreamableDataType DataType => StreamableDataType.RawFile;
+        /// <param name="name">资源名称</param>
+        /// <param name="url">资源地址</param>
+        /// <returns>返回原生文件对象实例</returns>
+        IRawFileObject LoadSync(string name, string url);
+        /// <summary>
+        /// 异步方式加载流式资源
+        /// </summary>
+        /// <param name="name">资源名称</param>
+        /// <param name="url">资源地址</param>
+        /// <returns>返回原生文件对象实例</returns>
+        IRawFileObject LoadAsync(string name, string url);
 
         /// <summary>
         /// 获取原生文件的二进制数据

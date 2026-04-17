@@ -37,13 +37,17 @@ namespace NovaFramework.AssetLoader
     public abstract class StreamableObject : IStreamableObject
     {
         /// <summary>
-        /// 异步资源的状态标识
+        /// 异步资源加载模式
         /// </summary>
-        private bool _isAsyncStatus = false;
+        private bool _isAsyncMode = false;
         /// <summary>
-        /// 资源对象的名称
+        /// 流式资源的名称
         /// </summary>
-        private string _nickname;
+        private string _name;
+        /// <summary>
+        /// 流式资源的地址
+        /// </summary>
+        private string _url;
 
         /// <summary>
         /// 流程传输对象初始化回调函数
@@ -86,34 +90,48 @@ namespace NovaFramework.AssetLoader
         protected virtual void OnRelease() { }
 
         /// <summary>
-        /// 同步加载回调通知接口函数
+        /// 同步加载初始化回调通知接口函数
         /// </summary>
-        /// <param name="nickname">资源名称</param>
-        /// <param name="loadableObject">资源加载对象</param>
-        public virtual void OnLoadSync(string nickname, object loadableObject)
+        /// <param name="name">资源名称</param>
+        /// <param name="url">资源地址</param>
+        protected void OnLoadSyncInit(string name, string url)
         {
-            _isAsyncStatus = false;
-            _nickname = nickname;
+            _isAsyncMode = false;
+            _name = name;
+            _url = url;
         }
 
         /// <summary>
-        /// 异步加载回调通知接口函数
+        /// 异步加载初始化回调通知接口函数
         /// </summary>
-        /// <param name="nickname">资源名称</param>
-        /// <param name="loadableObject">资源加载对象</param>
-        public virtual void OnLoadAsync(string nickname, object loadableObject)
+        /// <param name="name">资源名称</param>
+        /// <param name="url">资源地址</param>
+        protected void OnLoadAsyncInit(string name, string url)
         {
-            _isAsyncStatus = true;
-            _nickname = nickname;
+            _isAsyncMode = true;
+            _name = name;
+            _url = url;
         }
 
         #region 异步调度所需实现的接口函数
 
+        /// <summary>
+        /// 流式资源名称属性
+        /// </summary>
+        public string Name => _name;
+        /// <summary>
+        /// 流式资源地址属性
+        /// </summary>
+        public string Url => _url;
+
+        /// <summary>
+        /// 异步任务属性
+        /// </summary>
         public Task Task
         {
             get
             {
-                if (!_isAsyncStatus) throw new InvalidOperationException();
+                if (!_isAsyncMode) throw new InvalidOperationException();
 
                 return CurrentSchedulingTask;
             }

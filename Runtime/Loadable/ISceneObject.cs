@@ -31,11 +31,26 @@ namespace NovaFramework.AssetLoader
     /// </summary>
     public interface ISceneObject : IStreamableObject
     {
-        /// <summary>
-        /// 流式传输的数据类型
-        /// </summary>
-        new StreamableDataType DataType => StreamableDataType.RawFile;
-
         Scene Scene { get; }
+
+        /// <summary>
+        /// 同步加载场景资源
+        /// </summary>
+        /// <param name="name">资源名称</param>
+        /// <param name="url">资源地址</param>
+        /// <param name="sceneMode">场景加载模式</param>
+        /// <param name="physicsMode">场景物理模式</param>
+        /// <returns>返回场景资源对象</returns>
+        ISceneObject LoadSync(string name, string url, LoadSceneMode sceneMode, LocalPhysicsMode physicsMode);
+
+        /// <summary>
+        /// 异步加载场景资源
+        /// </summary>
+        /// <param name="name">资源名称</param>
+        /// <param name="url">资源地址</param>
+        /// <param name="sceneMode">场景加载模式</param>
+        /// <param name="physicsMode">场景物理模式</param>
+        /// <returns>返回场景资源对象</returns>
+        ISceneObject LoadAsync(string name, string url, LoadSceneMode sceneMode, LocalPhysicsMode physicsMode);
     }
 }
