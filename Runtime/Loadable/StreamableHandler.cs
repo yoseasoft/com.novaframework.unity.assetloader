@@ -30,27 +30,28 @@ using System.Threading.Tasks;
 namespace NovaFramework.AssetLoader
 {
     /// <summary>
-    /// 流式传输抽象对象类，用于对所有可流式传输资源的数据及访问操作的封装<br/>
-    /// 在Unity环境下，该对象包含了场景、原生文件、预制体、纹理在内的所有资产数据。<br/>
-    /// 你可以基于该对象，对具体的资产类型进行封装。
+    /// 流式传输抽象句柄类，用于对所有可流式传输资源的数据及访问操作的封装<br/>
+    /// 在Unity环境下，该句柄包含了场景、原生文件、预制体、纹理在内的所有资产数据。<br/>
+    /// 你可以基于该句柄，对具体的资产类型进行封装。
     /// </summary>
-    public abstract class StreamableObject : IStreamableObject
+    public abstract class StreamableHandler : IStreamableHandler
     {
-        /// <summary>
-        /// 异步资源加载模式
-        /// </summary>
-        private bool _isAsyncMode = false;
-        /// <summary>
-        /// 流式资源的名称
-        /// </summary>
-        private string _name;
         /// <summary>
         /// 流式资源的地址
         /// </summary>
         private string _url;
+        /// <summary>
+        /// 异步资源加载模式
+        /// </summary>
+        private bool _isAsyncMode = false;
 
         /// <summary>
-        /// 流程传输对象初始化回调函数
+        /// 流式资源地址属性
+        /// </summary>
+        public string Url => _url;
+
+        /// <summary>
+        /// 流程传输句柄初始化回调函数
         /// </summary>
         public void Initialize()
         {
@@ -58,7 +59,7 @@ namespace NovaFramework.AssetLoader
         }
 
         /// <summary>
-        /// 流程传输对象清理回调函数
+        /// 流程传输句柄清理回调函数
         /// </summary>
         public void Cleanup()
         {
@@ -69,7 +70,7 @@ namespace NovaFramework.AssetLoader
         }
 
         /// <summary>
-        /// 释放当前对象接收的资源实例
+        /// 释放当前句柄接收的资源实例
         /// </summary>
         public void Release()
         {
@@ -77,52 +78,42 @@ namespace NovaFramework.AssetLoader
         }
 
         /// <summary>
-        /// 对象内部初始化处理函数
+        /// 句柄内部初始化处理函数
         /// </summary>
         protected virtual void OnInitialize() { }
         /// <summary>
-        /// 对象内部清理处理函数
+        /// 句柄内部清理处理函数
         /// </summary>
         protected virtual void OnCleanup() { }
         /// <summary>
-        /// 对象内部资源释放处理函数
+        /// 句柄内部资源释放处理函数
         /// </summary>
         protected virtual void OnRelease() { }
 
         /// <summary>
-        /// 同步加载初始化回调通知接口函数
+        /// 资源加载预处理回调通知接口函数
         /// </summary>
-        /// <param name="name">资源名称</param>
         /// <param name="url">资源地址</param>
-        protected void OnLoadSyncInit(string name, string url)
+        protected void OnLoadInit(string url, bool isAsync = false)
         {
-            _isAsyncMode = false;
-            _name = name;
             _url = url;
-        }
-
-        /// <summary>
-        /// 异步加载初始化回调通知接口函数
-        /// </summary>
-        /// <param name="name">资源名称</param>
-        /// <param name="url">资源地址</param>
-        protected void OnLoadAsyncInit(string name, string url)
-        {
-            _isAsyncMode = true;
-            _name = name;
-            _url = url;
+            _isAsyncMode = isAsync;
         }
 
         #region 异步调度所需实现的接口函数
 
         /// <summary>
-        /// 流式资源名称属性
+        /// 资源装载完成的结束状态标识
         /// </summary>
-        public string Name => _name;
-        /// <summary>
-        /// 流式资源地址属性
-        /// </summary>
-        public string Url => _url;
+        public bool IsDone
+        {
+            get
+            {
+                if (_isAsyncMode) return CurrentTaskCompleted;
+
+                return true;
+            }
+        }
 
         /// <summary>
         /// 异步任务属性
@@ -136,6 +127,11 @@ namespace NovaFramework.AssetLoader
                 return CurrentSchedulingTask;
             }
         }
+
+        /// <summary>
+        /// 获取当前任务的结束状态标识
+        /// </summary>
+        protected abstract bool CurrentTaskCompleted { get; }
 
         /// <summary>
         /// 获取当前正在调度任务属性

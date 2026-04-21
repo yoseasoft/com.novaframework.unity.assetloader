@@ -22,35 +22,41 @@
 /// THE SOFTWARE.
 /// -------------------------------------------------------------------------------
 
+using System;
 using UnityEngine.SceneManagement;
 
 namespace NovaFramework.AssetLoader
 {
     /// <summary>
-    /// 场景资源对象接口类，对外提供场景资源的数据访问操作接口
+    /// 场景资源句柄接口类，对外提供场景资源的数据访问操作接口
     /// </summary>
-    public interface ISceneObject : IStreamableObject
+    public interface ISceneHandler : IStreamableHandler
     {
-        Scene Scene { get; }
+        Scene SceneObject { get; }
+
+        float LoadingProgress { get; }
+
+        /// <summary>
+        /// 加载完成的回调注册
+        /// </summary>
+        Action<ISceneHandler> Completed { set; get; }
 
         /// <summary>
         /// 同步加载场景资源
         /// </summary>
-        /// <param name="name">资源名称</param>
         /// <param name="url">资源地址</param>
         /// <param name="sceneMode">场景加载模式</param>
         /// <param name="physicsMode">场景物理模式</param>
-        /// <returns>返回场景资源对象</returns>
-        ISceneObject LoadSync(string name, string url, LoadSceneMode sceneMode, LocalPhysicsMode physicsMode);
+        /// <returns>返回场景资源句柄</returns>
+        ISceneHandler LoadSync(string url, LoadSceneMode sceneMode, LocalPhysicsMode physicsMode);
 
         /// <summary>
         /// 异步加载场景资源
         /// </summary>
-        /// <param name="name">资源名称</param>
         /// <param name="url">资源地址</param>
         /// <param name="sceneMode">场景加载模式</param>
         /// <param name="physicsMode">场景物理模式</param>
-        /// <returns>返回场景资源对象</returns>
-        ISceneObject LoadAsync(string name, string url, LoadSceneMode sceneMode, LocalPhysicsMode physicsMode);
+        /// <returns>返回场景资源句柄</returns>
+        ISceneHandler LoadAsync(string url, LoadSceneMode sceneMode, LocalPhysicsMode physicsMode);
     }
 }

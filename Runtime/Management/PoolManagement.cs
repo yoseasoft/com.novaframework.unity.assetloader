@@ -22,38 +22,43 @@
 /// THE SOFTWARE.
 /// -------------------------------------------------------------------------------
 
+using System;
+using System.Collections;
+using System.Collections.Generic;
+
 namespace NovaFramework.AssetLoader
 {
     /// <summary>
-    /// 原生文件对象接口类，对外提供原生文件的数据访问操作接口
+    /// 流式传输对象的缓冲池管理类，用于对所有流程传输对象实例进行池化管理
     /// </summary>
-    public interface IRawFileObject : IStreamableObject
+    public static class PoolManagement
     {
         /// <summary>
-        /// 同步模式加载流式资源
+        /// 分配指定类型的流程传输对象实例
         /// </summary>
-        /// <param name="name">资源名称</param>
-        /// <param name="url">资源地址</param>
-        /// <returns>返回原生文件对象实例</returns>
-        IRawFileObject LoadSync(string name, string url);
-        /// <summary>
-        /// 异步方式加载流式资源
-        /// </summary>
-        /// <param name="name">资源名称</param>
-        /// <param name="url">资源地址</param>
-        /// <returns>返回原生文件对象实例</returns>
-        IRawFileObject LoadAsync(string name, string url);
+        /// <typeparam name="T">对象类型</typeparam>
+        /// <returns>返回流程传输对象实例</returns>
+        public static T Acquire<T>() where T : class, IStreamableHandler, new()
+        {
+            return null;
+        }
 
         /// <summary>
-        /// 获取原生文件的二进制数据
+        /// 分配指定类型的流程传输对象实例
         /// </summary>
-        /// <returns>返回二进制数据流</returns>
-        byte[] GetRawFileData();
+        /// <param name="type">对象类型</param>
+        /// <returns>返回流程传输对象实例</returns>
+        public static IStreamableHandler Acquire(Type type)
+        {
+            return null;
+        }
 
         /// <summary>
-        /// 获取原生文件的文本数据
+        /// 释放指定的流程传输对象实例
         /// </summary>
-        /// <returns>返回文本字符串</returns>
-        string GetRawFileText();
+        /// <param name="streamableObject">对象实例</param>
+        public static void Release(IStreamableHandler streamableObject)
+        {
+        }
     }
 }

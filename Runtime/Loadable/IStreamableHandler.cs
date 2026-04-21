@@ -28,32 +28,33 @@ using System.Threading.Tasks;
 namespace NovaFramework.AssetLoader
 {
     /// <summary>
-    /// 流式传输对象接口类，对外提供可流式传输资源的数据访问操作接口
+    /// 流式传输句柄接口类，对外提供可流式传输资源的数据访问操作接口
     /// </summary>
-    public interface IStreamableObject
+    public interface IStreamableHandler
     {
         /// <summary>
-        /// 流式传输对象初始化回调函数
+        /// 流式传输句柄初始化回调函数
         /// </summary>
         void Initialize();
         /// <summary>
-        /// 流式传输对象清理回调函数
+        /// 流式传输句柄清理回调函数
         /// </summary>
         void Cleanup();
 
         /// <summary>
-        /// 释放当前数据对象接收的资源实例
+        /// 释放当前数据句柄接收的资源实例
         /// </summary>
         void Release();
 
         /// <summary>
-        /// 流式资源名称属性获取函数
-        /// </summary>
-        string Name { get; }
-        /// <summary>
         /// 流式资源地址属性获取函数
         /// </summary>
         string Url { get; }
+
+        /// <summary>
+        /// 资源装载完成的结束状态标识
+        /// </summary>
+        bool IsDone { get; }
 
         /// <summary>
         /// 异步任务属性获取函数

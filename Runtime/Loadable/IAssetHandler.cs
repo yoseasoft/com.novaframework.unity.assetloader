@@ -27,65 +27,68 @@ using System;
 namespace NovaFramework.AssetLoader
 {
     /// <summary>
-    /// 普通资源对象接口类，对外提供普通资源的数据访问操作接口
+    /// 普通资源句柄接口类，对外提供普通资源的数据访问操作接口
     /// </summary>
-    public interface IAssetObject : IStreamableObject
+    public interface IAssetHandler : IStreamableHandler
     {
+        /// <summary>
+        /// 加载的资产对象类型
+        /// </summary>
+        Type AssetType { get; }
         /// <summary>
         /// 加载的资产对象实例
         /// </summary>
-        UnityEngine.Object Asset { get; }
+        UnityEngine.Object AssetObject { get; }
+
+        /// <summary>
+        /// 加载完成的回调注册
+        /// </summary>
+        Action<IAssetHandler> Completed { set; get; }
 
         /// <summary>
         /// 同步加载通用资源对象
         /// </summary>
-        /// <param name="name">资源名称</param>
         /// <param name="url">资源地址</param>
-        /// <returns>返回通用资源对象</returns>
-        IAssetObject LoadSync(string name, string url);
+        /// <returns>返回通用资源句柄</returns>
+        IAssetHandler LoadSync(string url);
 
         /// <summary>
         /// 同步加载通用资源对象
         /// </summary>
         /// <typeparam name="T">资源类型</typeparam>
-        /// <param name="name">资源名称</param>
         /// <param name="url">资源地址</param>
-        /// <returns>返回通用资源对象</returns>
-        IAssetObject LoadSync<T>(string name, string url) where T : UnityEngine.Object;
+        /// <returns>返回通用资源句柄</returns>
+        IAssetHandler LoadSync<T>(string url) where T : UnityEngine.Object;
 
         /// <summary>
         /// 同步加载通用资源对象
         /// </summary>
-        /// <param name="name">资源名称</param>
         /// <param name="url">资源地址</param>
         /// <param name="type">资源类型</param>
-        /// <returns>返回通用资源对象</returns>
-        IAssetObject LoadSync(string name, string url, Type type);
+        /// <returns>返回通用资源句柄</returns>
+        IAssetHandler LoadSync(string url, Type type);
 
         /// <summary>
         /// 异步加载通用资源对象
         /// </summary>
-        /// <param name="name">资源名称</param>
         /// <param name="url">资源地址</param>
-        /// <returns>返回通用资源对象</returns>
-        IAssetObject LoadAsync(string name, string url);
+        /// <returns>返回通用资源句柄</returns>
+        IAssetHandler LoadAsync(string url);
 
         /// <summary>
         /// 异步加载通用资源对象
         /// </summary>
         /// <typeparam name="T">资源类型</typeparam>
-        /// <param name="name">资源名称</param>
         /// <param name="url">资源地址</param>
-        /// <returns>返回通用资源对象</returns>
-        IAssetObject LoadAsync<T>(string name, string url) where T : UnityEngine.Object;
+        /// <returns>返回通用资源句柄</returns>
+        IAssetHandler LoadAsync<T>(string url) where T : UnityEngine.Object;
 
         /// <summary>
         /// 异步加载通用资源对象
         /// </summary>
-        /// <param name="name">资源名称</param>
         /// <param name="url">资源地址</param>
         /// <param name="type">资源类型</param>
-        /// <returns>返回通用资源对象</returns>
-        IAssetObject LoadAsync(string name, string url, Type type);
+        /// <returns>返回通用资源句柄</returns>
+        IAssetHandler LoadAsync(string url, Type type);
     }
 }
